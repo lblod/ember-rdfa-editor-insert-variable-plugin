@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="0" height="0" style="display:none;"><symbol viewBox="0 0 24 24" id="arrow-down">
+  <g class="nav-down">
+    <path d="M12 17L3 8.429 4.5 7l7.5 7.143L19.5 7 21 8.429 12 17z" class="Vector"/>
+  </g>
+</symbol><symbol viewBox="0 0 24 24" id="calendar">
+  <g class="calendar">
+    <path d="M21 3a2 2 0 012 2v15a2 2 0 01-2 2H3a2 2 0 01-2-2V5a2 2 0 012-2h2v2H3v15h18V5h-3v2h-2V1h2v2h3zM8 5v2H6V1h2v2h7v2H8zM5 9h4v4H5V9zm5 0h4v4h-4V9zm5 0h4v4h-4V9zM5 14h4v4H5v-4zm5 0h4v4h-4v-4z" class="Vector"/>
+  </g>
+</symbol><symbol viewBox="0 0 24 24" id="check">
+  <g class="check">
+    <path d="M10.695 17L5 12.553l1.424-1.872 3.796 3.042L17.102 6 19 7.404 10.695 17z" class="Vector"/>
+  </g>
+</symbol><symbol viewBox="0 0 24 24" id="checkbox-checked">
+  <g class="checkbox-checked">
+    <path d="M38 6H10c-2.21 0-4 1.79-4 4v28c0 2.21 1.79 4 4 4h28c2.21 0 4-1.79 4-4V10c0-2.21-1.79-4-4-4zM20 34L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z" class="Vector"/>
+  </g>
+</symbol><symbol viewBox="0 0 24 24" id="checkbox-indeterminate">
+  <g class="checkbox-indeterminate">
+    <defs>
+      <path id="a" d="M0 0h24v24H0z"/>
+    </defs>
+    <clippath id="b">
+      <use xlink:href="#a" overflow="visible"/>
+    </clippath>
+    <path clip-path="url(#b)" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/>
+  </g>
+</symbol><symbol viewBox="0 0 24 24" id="checkbox-unchecked">
+  <g class="checkbox-unchecked">
+    <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" class="Vector"/>
+  </g>
+</symbol><symbol viewBox="0 0 24 24" id="nav-down">
+  <g class="nav-down">
+    <path d="M12 17L3 8.429 4.5 7l7.5 7.143L19.5 7 21 8.429 12 17z" class="Vector"/>
+  </g>
+</symbol><symbol viewBox="0 0 24 24" id="search">
+  <g class="search">
+    <path d="M21.701 20.301l-5.4-5.4a7.88 7.88 0 001.7-4.9 8.27 8.27 0 00-2.3-5.7 8.21 8.21 0 00-11.4 0 8.21 8.21 0 000 11.4 8.27 8.27 0 005.7 2.3 7.88 7.88 0 004.9-1.7l5.4 5.4 1.4-1.4zm-11.7-4.3a5.6 5.6 0 01-4.2-1.8 5.6 5.6 0 01-1.8-4.2 5.6 5.6 0 011.8-4.2 5.6 5.6 0 014.2-1.8 5.6 5.6 0 014.2 1.8 5.6 5.6 0 011.8 4.2 5.6 5.6 0 01-1.8 4.2 5.6 5.6 0 01-4.2 1.8z" class="Vector"/>
+  </g>
+</symbol></svg>

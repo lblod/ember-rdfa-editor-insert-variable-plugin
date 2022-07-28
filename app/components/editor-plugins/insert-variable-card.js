@@ -1,0 +1,1 @@
+export { default } from '@lblod/ember-rdfa-editor-insert-variable-plugin/components/editor-plugins/insert-variable-card';

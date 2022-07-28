@@ -1,1 +1,1 @@
-# ember-rdfa-editor-insert-codelist-plugin
+# ember-rdfa-editor-insert-variable-plugin
