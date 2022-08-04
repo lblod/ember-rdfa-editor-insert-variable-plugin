@@ -16,7 +16,8 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
     super(...arguments);
     const config = getOwner(this).resolveRegistration('config:environment');
     this.endpoint = config.insertCodelistPlugin.endpoint;
-    this.fetchCodeList.perform()
+    const { administrativeUnitUuid } = this.args.widgetArgs.options
+    this.fetchCodeList.perform(administrativeUnitUuid)
   }
 
   @action
@@ -42,12 +43,11 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
   }
 
   @task
-  *fetchCodeList(codelistUri, isLocation) {
+  *fetchCodeList(administrativeUnitUuid) {
     const codelists = yield fetchCodeLists(
       this.endpoint,
-      codelistUri
+      administrativeUnitUuid
     );
-    console.log(codelists)
     this.codelists = codelists
   }
 }

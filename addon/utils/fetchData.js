@@ -1,20 +1,23 @@
-function generateCodeListOptionsQuery() {
+function generateCodeListOptionsQuery(administrativeUnitUuid) {
   const codeListOptionsQuery = `
     PREFIX lblodMobilitiet: <http://data.lblod.info/vocabularies/mobiliteit/>
     PREFIX dct: <http://purl.org/dc/terms/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+    PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
     SELECT DISTINCT * WHERE { 
       ?uri a lblodMobilitiet:Codelist;
-        skos:prefLabel ?label.
+        skos:prefLabel ?label;
+        dct:publisher ?publisher.
+      ?publisher mu:uuid """${administrativeUnitUuid}"""
     }
   `;
   return codeListOptionsQuery;
 }
 
-export default async function fetchCodeLists(endpoint, codelistUri) {
+export default async function fetchCodeLists(endpoint, administrativeUnitUuid) {
   const codelistsOptionsQueryResult = await executeQuery(
     endpoint,
-    generateCodeListOptionsQuery()
+    generateCodeListOptionsQuery(administrativeUnitUuid)
   );
   const bindings = codelistsOptionsQueryResult.results.bindings
   return bindings.map((binding) => ({
@@ -25,6 +28,8 @@ export default async function fetchCodeLists(endpoint, codelistUri) {
 
 async function executeQuery(endpoint, query) {
   const encodedQuery = encodeURIComponent(query.trim());
+  console.log(endpoint)
+  console.log(encodedQuery)
   const response = await fetch(endpoint, {
     method: 'POST',
     mode: 'cors',
