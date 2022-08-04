@@ -6,9 +6,13 @@ function generateCodeListOptionsQuery(administrativeUnitUuid) {
     PREFIX mu: <http://mu.semte.ch/vocabularies/core/>
     SELECT DISTINCT * WHERE { 
       ?uri a lblodMobilitiet:Codelist;
-        skos:prefLabel ?label;
-        dct:publisher ?publisher.
-      ?publisher mu:uuid """${administrativeUnitUuid}"""
+        skos:prefLabel ?label.
+      ${administrativeUnitUuid ? `
+        ?uri dct:publisher ?publisher.
+        ?publisher mu:uuid """${administrativeUnitUuid}"""
+      `
+      :
+      ''}
     }
   `;
   return codeListOptionsQuery;
