@@ -11,7 +11,11 @@ export default class ApplicationController extends Controller {
 
   @action
   rdfaEditorInit(controller) {
-    const presetContent = ``;
+    const presetContent = `
+      <div prefix="ext: http://mu.semte.ch/vocabularies/ext/ ">
+      click here
+      </div>
+    `;
     controller.setHtmlContent(presetContent);
     const editorDone = new CustomEvent('editor-done');
     window.dispatchEvent(editorDone);

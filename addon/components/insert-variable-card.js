@@ -5,21 +5,19 @@ import { getOwner } from '@ember/application';
 import { task } from 'ember-concurrency';
 import { v4 as uuidv4 } from 'uuid';
 
-import fetchCodeLists from '../utils/fetchData';
-
 export default class EditorPluginsInsertCodelistCardComponent extends Component {
-  @tracked codelists = [];
-  @tracked selectedCodelist;
+  @tracked variableTypes = [
+    'text',
+    'number',
+    'date',
+    'location'
+  ];
+  @tracked selectedVariableType;
   @tracked showCard = true;
 
   constructor() {
     super(...arguments);
-    const config = getOwner(this).resolveRegistration('config:environment');
-    this.endpoint = config.insertCodelistPlugin.endpoint;
-    const { administrativeUnitUuid } = this.args.widgetArgs.options
     this.args.controller.onEvent('selectionChanged', this.selectionChanged);
-    this.fetchCodeList.perform(administrativeUnitUuid)
-    
   }
 
   @action
@@ -27,9 +25,8 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
     const uri = `http://data.lblod.info/mappings/${uuidv4()}`;
     const htmlToInsert = `
       <span resource="${uri}" typeof="ext:Mapping">
-        <span property="dct:type" content="codelist"></span>
-        <span property="ext:codelist" content="${this.selectedCodelist.uri}"></span>
-        <span property="ext:content">\${${this.selectedCodelist.label}}</span>
+        <span property="dct:type" content="${this.selectedVariableType}"></span>
+        <span property="ext:content">\${${this.selectedVariableType}}</span>
       </span>
     `
     this.args.controller.executeCommand(
@@ -37,21 +34,12 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
       htmlToInsert,
       this.args.controller.selection.lastRange,
     );
-    this.selectedCodelist = undefined;
+    this.selectedVariableType = undefined;
   }
 
   @action
-  updateCodelist(codelist) {
-    this.selectedCodelist = codelist;
-  }
-
-  @task
-  *fetchCodeList(administrativeUnitUuid) {
-    const codelists = yield fetchCodeLists(
-      this.endpoint,
-      administrativeUnitUuid
-    );
-    this.codelists = codelists
+  updateSelectedVariable(variableTyoe) {
+    this.selectedVariableType = variableTyoe;
   }
   @action
   selectionChanged() {
