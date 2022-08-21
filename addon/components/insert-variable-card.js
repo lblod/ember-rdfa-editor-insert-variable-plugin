@@ -10,14 +10,20 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
     'text',
     'number',
     'date',
-    'location'
+    'location',
+    'codelist'
   ];
   @tracked selectedVariableType;
   @tracked showCard = true;
+  @tracked isCodelist = false
 
   constructor() {
     super(...arguments);
+    const config = getOwner(this).resolveRegistration('config:environment');
+    this.endpoint = config.insertCodelistPlugin.endpoint;
+    const { administrativeUnitUuid } = this.args.widgetArgs.options
     this.args.controller.onEvent('selectionChanged', this.selectionChanged);
+    this.fetchCodeList.perform(administrativeUnitUuid)
   }
 
   @action
@@ -38,9 +44,29 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
   }
 
   @action
-  updateSelectedVariable(variableTyoe) {
-    this.selectedVariableType = variableTyoe;
+  updateSelectedVariable(variableType) {
+    this.selectedVariableType = variableType;
+    if(variableType === 'codelist') {
+      this.isCodelist = true
+    } else {
+      this.isCodelist = false;
+    }
   }
+
+  @action
+  updateCodelist(codelist) {
+    this.selectedCodelist = codelist;
+  }
+
+  @task
+  *fetchCodeList(administrativeUnitUuid) {
+    const codelists = yield fetchCodeLists(
+      this.endpoint,
+      administrativeUnitUuid
+    );
+    this.codelists = codelists
+  }
+
   @action
   selectionChanged() {
     this.showCard = false;

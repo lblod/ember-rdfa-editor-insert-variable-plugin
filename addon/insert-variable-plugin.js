@@ -30,17 +30,12 @@ export default class InsertVariablePlugin {
   initialize(controller, options) {
     this.controller = controller;
     controller.registerWidget({
-      componentName: 'insert-codelist-card',
-      identifier: 'insert-variable-plugin/codelist-card',
+      componentName: 'insert-variable-card',
+      identifier: 'insert-variable-plugin/card',
       desiredLocation: 'sidebar',
       widgetArgs: {
         options: options,
       },
-    });
-    controller.registerWidget({
-      componentName: 'insert-variable-card',
-      identifier: 'insert-variable-plugin/card',
-      desiredLocation: 'sidebar',
     });
   }
 }
