@@ -27,6 +27,7 @@ export default class InsertVariablePlugin {
     return 'insert-variable-plugin';
   }
 
+
   initialize(controller, options) {
     this.controller = controller;
     controller.registerWidget({
