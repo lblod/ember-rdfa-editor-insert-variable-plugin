@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import { getOwner } from '@ember/application';
 import { task } from 'ember-concurrency';
 import { v4 as uuidv4 } from 'uuid';
+import fetchCodeLists from '../utils/fetchData';
 
 export default class EditorPluginsInsertCodelistCardComponent extends Component {
   @tracked variableTypes = [
@@ -16,6 +17,7 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
   @tracked selectedVariableType;
   @tracked showCard = true;
   @tracked isCodelist = false
+  @tracked selectedCodelist;
 
   constructor() {
     super(...arguments);
