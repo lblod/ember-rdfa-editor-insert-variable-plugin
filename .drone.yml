@@ -1,0 +1,64 @@
+---
+kind: pipeline
+type: docker
+name: verify-pr
+steps:
+- name: install
+  image: danlynn/ember-cli:3.28.2
+  commands:
+  - npm ci
+- name: lint
+  image: danlynn/ember-cli:3.28.2
+  commands:
+  - npm run lint
+- name: test
+  image: danlynn/ember-cli:3.28.2
+  commands:
+  - npm run test:ember
+trigger:
+  event:
+    - pull_request
+---
+kind: pipeline
+type: docker
+name: ember-compat-test
+steps:
+- name: ember-try
+  image: danlynn/ember-cli:3.28.2
+  commands:
+    - npm ci
+    - npm run test:ember-compatibility
+  failure: ignore
+trigger:
+  branch:
+    - development
+  event:
+    exclude:
+    - pull_request
+---
+kind: pipeline
+type: docker
+name: release
+steps:
+- name: install dependencies
+  image: danlynn/ember-cli:3.28.2
+  commands:
+    - npm ci
+- name: npm-release
+  image: plugins/npm
+  settings:
+    token:
+      from_secret: npm_access_token
+    access: public
+trigger:
+  event:
+    - tag
+---
+kind: secret
+name: npm_access_token
+data: tpDnus+DEH8PbDsZboB5OLnI2UiegftgOHqMHyHDUuLoaI1hXRn0dllZEbWONfCM7BGq1iohZKBsi7acIJN65NHGl5Y=
+---
+kind: signature
+hmac: b16db266adb4bc039e9c6d07edec95f112404f63c7d2f001b356822b2fa1fdfb
+
+...
