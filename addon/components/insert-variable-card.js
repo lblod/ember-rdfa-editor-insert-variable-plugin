@@ -22,10 +22,10 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
   constructor() {
     super(...arguments);
     const config = getOwner(this).resolveRegistration('config:environment');
-    this.endpoint = config.insertCodelistPlugin.endpoint;
-    const { administrativeUnitUuid } = this.args.widgetArgs.options
+    this.endpoint = config.insertVariablePlugin.endpoint;
+    const { publisher } = this.args.widgetArgs.options
     this.args.controller.onEvent('selectionChanged', this.selectionChanged);
-    this.fetchCodeList.perform(administrativeUnitUuid)
+    this.fetchCodeList.perform(publisher)
   }
 
   @action
@@ -33,6 +33,7 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
     const uri = `http://data.lblod.info/mappings/${uuidv4()}`;
     const htmlToInsert = `
       <span resource="${uri}" typeof="ext:Mapping">
+        <span property="dct:source" content="${this.endpoint}"></span>
         <span property="dct:type" content="${this.selectedVariableType}"></span>
         <span property="ext:content">\${${this.selectedVariableType}}</span>
       </span>
@@ -61,10 +62,10 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
   }
 
   @task
-  *fetchCodeList(administrativeUnitUuid) {
+  *fetchCodeList(publisher) {
     const codelists = yield fetchCodeLists(
       this.endpoint,
-      administrativeUnitUuid
+      publisher
     );
     this.codelists = codelists
   }

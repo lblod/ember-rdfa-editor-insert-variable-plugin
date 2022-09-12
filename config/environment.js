@@ -2,7 +2,7 @@
 
 module.exports = function (/* environment, appConfig */) {
   return {
-    insertCodelistPlugin: {
+    insertVariablePlugin: {
       endpoint: 'https://dev.roadsigns.lblod.info/sparql',
     }
   };
