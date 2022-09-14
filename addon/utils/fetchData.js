@@ -7,12 +7,14 @@ function generateCodeListOptionsQuery(administrativeUnitUuid) {
     SELECT DISTINCT * WHERE { 
       ?uri a lblodMobilitiet:Codelist;
         skos:prefLabel ?label.
-      ${administrativeUnitUuid ? `
+      ${
+        administrativeUnitUuid
+          ? `
         ?uri dct:publisher ?publisher.
         ?publisher mu:uuid """${administrativeUnitUuid}"""
       `
-      :
-      ''}
+          : ''
+      }
     }
   `;
   return codeListOptionsQuery;
@@ -23,17 +25,17 @@ export default async function fetchCodeLists(endpoint, administrativeUnitUuid) {
     endpoint,
     generateCodeListOptionsQuery(administrativeUnitUuid)
   );
-  const bindings = codelistsOptionsQueryResult.results.bindings
+  const bindings = codelistsOptionsQueryResult.results.bindings;
   return bindings.map((binding) => ({
     uri: binding.uri.value,
-    label: binding.label.value
+    label: binding.label.value,
   }));
 }
 
 async function executeQuery(endpoint, query) {
   const encodedQuery = encodeURIComponent(query.trim());
-  console.log(endpoint)
-  console.log(encodedQuery)
+  console.log(endpoint);
+  console.log(encodedQuery);
   const response = await fetch(endpoint, {
     method: 'POST',
     mode: 'cors',
