@@ -27,7 +27,7 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
     const uri = `http://data.lblod.info/mappings/${uuidv4()}`;
     const htmlToInsert = `
       <span resource="${uri}" typeof="ext:Mapping">
-        <span property="dct:source" content="${this.endpoint}"></span>
+        <span property="dct:source" resource="${this.endpoint}"></span>
         <span property="dct:type" content="${this.selectedVariableType}"></span>
         <span property="ext:content">\${${this.selectedVariableType}}</span>
       </span>
