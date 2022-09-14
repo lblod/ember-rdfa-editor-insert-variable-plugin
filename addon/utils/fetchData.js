@@ -34,8 +34,6 @@ export default async function fetchCodeLists(endpoint, administrativeUnitUuid) {
 
 async function executeQuery(endpoint, query) {
   const encodedQuery = encodeURIComponent(query.trim());
-  console.log(endpoint);
-  console.log(encodedQuery);
   const response = await fetch(endpoint, {
     method: 'POST',
     mode: 'cors',
