@@ -1,4 +1,4 @@
-function generateCodeListOptionsQuery(administrativeUnitUuid) {
+function generateCodeListOptionsQuery(publisher) {
   const codeListOptionsQuery = `
     PREFIX lblodMobilitiet: <http://data.lblod.info/vocabularies/mobiliteit/>
     PREFIX dct: <http://purl.org/dc/terms/>
@@ -8,10 +8,9 @@ function generateCodeListOptionsQuery(administrativeUnitUuid) {
       ?uri a lblodMobilitiet:Codelist;
         skos:prefLabel ?label.
       ${
-        administrativeUnitUuid
+        publisher
           ? `
-        ?uri dct:publisher ?publisher.
-        ?publisher mu:uuid """${administrativeUnitUuid}"""
+        ?uri dct:publisher <${publisher}>.
       `
           : ''
       }
@@ -20,10 +19,10 @@ function generateCodeListOptionsQuery(administrativeUnitUuid) {
   return codeListOptionsQuery;
 }
 
-export default async function fetchCodeLists(endpoint, administrativeUnitUuid) {
+export default async function fetchCodeLists(endpoint, publisher) {
   const codelistsOptionsQueryResult = await executeQuery(
     endpoint,
-    generateCodeListOptionsQuery(administrativeUnitUuid)
+    generateCodeListOptionsQuery(publisher)
   );
   const bindings = codelistsOptionsQueryResult.results.bindings;
   return bindings.map((binding) => ({
