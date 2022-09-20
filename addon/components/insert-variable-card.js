@@ -70,7 +70,7 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
   }
 
   modifiesSelection(steps){
-    steps.some((step) => step.type === 'selection-step' || step.type === 'operation-step')
+    return steps.some((step) => step.type === 'selection-step' || step.type === 'operation-step')
   }
 
   @action
