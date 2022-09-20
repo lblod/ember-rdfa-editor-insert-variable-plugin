@@ -74,17 +74,18 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
   }
 
   @action
-  transactionUpdate(_transaction, steps) {
+  transactionUpdate(transaction, steps) {
     if(this.modifiesSelection(steps)){
       this.showCard = false;
-      const limitedDatastore = this.args.controller.datastore.limitToRange(
-        this.args.controller.selection.lastRange,
+      const limitedDatastore = transaction.getCurrentDataStore().limitToRange(
+        transaction.currentSelection.lastRange,
         'rangeIsInside'
       );
       const mapping = limitedDatastore
         .match(null, 'a', 'ext:Mapping')
         .asQuads()
         .next().value;
+      console.log(mapping);
       if (mapping) {
         this.showCard = false;
       } else {
