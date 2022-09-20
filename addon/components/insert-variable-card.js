@@ -24,7 +24,7 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
     const config = getOwner(this).resolveRegistration('config:environment');
     this.endpoint = config.insertCodelistPlugin.endpoint;
     const { administrativeUnitUuid } = this.args.widgetArgs.options
-    this.args.controller.onEvent('selectionChanged', this.selectionChanged);
+    this.args.controller.addTransactionStepListener(this.transactionUpdate.bind(this));
     this.fetchCodeList.perform(administrativeUnitUuid)
   }
 
@@ -37,11 +37,11 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
         <span property="ext:content">\${${this.selectedVariableType}}</span>
       </span>
     `
-    this.args.controller.executeCommand(
-      'insert-html',
-      htmlToInsert,
-      this.args.controller.selection.lastRange,
-    );
+    this.args.controller.perform((tr) => {
+      tr.commands.insertHtml({
+        htmlString: htmlToInsert
+      })
+    })
     this.selectedVariableType = undefined;
   }
 
@@ -69,21 +69,27 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
     this.codelists = codelists
   }
 
+  modifiesSelection(steps){
+    steps.some((step) => step.type === 'selection-step' || step.type === 'operation-step')
+  }
+
   @action
-  selectionChanged() {
-    this.showCard = false;
-    const limitedDatastore = this.args.controller.datastore.limitToRange(
-      this.args.controller.selection.lastRange,
-      'rangeIsInside'
-    );
-    const mapping = limitedDatastore
-      .match(null, 'a', 'ext:Mapping')
-      .asQuads()
-      .next().value;
-    if (mapping) {
+  transactionUpdate(_transaction, steps) {
+    if(this.modifiesSelection(steps)){
       this.showCard = false;
-    } else {
-      this.showCard = true
+      const limitedDatastore = this.args.controller.datastore.limitToRange(
+        this.args.controller.selection.lastRange,
+        'rangeIsInside'
+      );
+      const mapping = limitedDatastore
+        .match(null, 'a', 'ext:Mapping')
+        .asQuads()
+        .next().value;
+      if (mapping) {
+        this.showCard = false;
+      } else {
+        this.showCard = true
+      }
     }
   }
 }
