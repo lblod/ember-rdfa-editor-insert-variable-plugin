@@ -37,21 +37,18 @@
     "uuid": "^8.3.2"
   },
   "peerDependencies": {
-    "@appuniversum/ember-appuniversum": "^1.0.2",
-    "@lblod/ember-rdfa-editor": "^0.60.5",
+    "@appuniversum/ember-appuniversum": "^1.7.0",
+    "@lblod/ember-rdfa-editor": ">=0.63.3",
     "ember-concurrency": "^2.2.0"
   },
   "devDependencies": {
-    "@appuniversum/ember-appuniversum": "^1.0.2",
-    "@codemirror/basic-setup": "^0.19.1",
-    "@codemirror/lang-html": "^0.19.4",
-    "@codemirror/lang-xml": "^0.19.2",
+    "@appuniversum/ember-appuniversum": "^1.7.0",
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.6.0",
     "@embroider/test-setup": "^0.48.1",
     "@glimmer/component": "^1.0.3",
     "@glimmer/tracking": "^1.0.3",
-    "@lblod/ember-rdfa-editor": "^0.60.5",
+    "@lblod/ember-rdfa-editor": "^0.63.3",
     "@release-it-plugins/lerna-changelog": "^5.0.0",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
@@ -93,11 +90,10 @@
     "qunit-dom": "^1.6.0",
     "release-it": "^15.3.0",
     "sass": "^1.49.7",
-    "webpack": "^5.69.0",
-    "xml-formatter": "^2.6.1"
+    "webpack": "^5.69.0"
   },
   "engines": {
-    "node": "12.* || 14.* || >= 16"
+    "node": ">= 16"
   },
   "ember": {
     "edition": "octane"
