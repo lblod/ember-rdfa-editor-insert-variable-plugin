@@ -1,4 +1,4 @@
-function generateCodeListOptionsQuery(administrativeUnitUuid) {
+function generateCodeListOptionsQuery(publisher) {
   const codeListOptionsQuery = `
     PREFIX lblodMobilitiet: <http://data.lblod.info/vocabularies/mobiliteit/>
     PREFIX dct: <http://purl.org/dc/terms/>
@@ -7,33 +7,32 @@ function generateCodeListOptionsQuery(administrativeUnitUuid) {
     SELECT DISTINCT * WHERE { 
       ?uri a lblodMobilitiet:Codelist;
         skos:prefLabel ?label.
-      ${administrativeUnitUuid ? `
-        ?uri dct:publisher ?publisher.
-        ?publisher mu:uuid """${administrativeUnitUuid}"""
+      ${
+        publisher
+          ? `
+        ?uri dct:publisher <${publisher}>.
       `
-      :
-      ''}
+          : ''
+      }
     }
   `;
   return codeListOptionsQuery;
 }
 
-export default async function fetchCodeLists(endpoint, administrativeUnitUuid) {
+export default async function fetchCodeLists(endpoint, publisher) {
   const codelistsOptionsQueryResult = await executeQuery(
     endpoint,
-    generateCodeListOptionsQuery(administrativeUnitUuid)
+    generateCodeListOptionsQuery(publisher)
   );
-  const bindings = codelistsOptionsQueryResult.results.bindings
+  const bindings = codelistsOptionsQueryResult.results.bindings;
   return bindings.map((binding) => ({
     uri: binding.uri.value,
-    label: binding.label.value
+    label: binding.label.value,
   }));
 }
 
 async function executeQuery(endpoint, query) {
   const encodedQuery = encodeURIComponent(query.trim());
-  console.log(endpoint)
-  console.log(encodedQuery)
   const response = await fetch(endpoint, {
     method: 'POST',
     mode: 'cors',

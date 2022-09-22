@@ -7,25 +7,19 @@ import { v4 as uuidv4 } from 'uuid';
 import fetchCodeLists from '../utils/fetchData';
 
 export default class EditorPluginsInsertCodelistCardComponent extends Component {
-  @tracked variableTypes = [
-    'text',
-    'number',
-    'date',
-    'location',
-    'codelist'
-  ];
+  @tracked variableTypes = ['text', 'number', 'date', 'location', 'codelist'];
   @tracked selectedVariableType;
   @tracked showCard = true;
-  @tracked isCodelist = false
+  @tracked isCodelist = false;
   @tracked selectedCodelist;
 
   constructor() {
     super(...arguments);
     const config = getOwner(this).resolveRegistration('config:environment');
-    this.endpoint = config.insertCodelistPlugin.endpoint;
-    const { administrativeUnitUuid } = this.args.widgetArgs.options
+    this.endpoint = config.insertVariablePlugin.endpoint;
+    const { publisher } = this.args.widgetArgs.options;
     this.args.controller.onEvent('selectionChanged', this.selectionChanged);
-    this.fetchCodeList.perform(administrativeUnitUuid)
+    this.fetchCodeList.perform(publisher);
   }
 
   @action
@@ -33,14 +27,15 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
     const uri = `http://data.lblod.info/mappings/${uuidv4()}`;
     const htmlToInsert = `
       <span resource="${uri}" typeof="ext:Mapping">
+        <span property="dct:source" resource="${this.endpoint}"></span>
         <span property="dct:type" content="${this.selectedVariableType}"></span>
         <span property="ext:content">\${${this.selectedVariableType}}</span>
       </span>
-    `
+    `;
     this.args.controller.executeCommand(
       'insert-html',
       htmlToInsert,
-      this.args.controller.selection.lastRange,
+      this.args.controller.selection.lastRange
     );
     this.selectedVariableType = undefined;
   }
@@ -48,8 +43,8 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
   @action
   updateSelectedVariable(variableType) {
     this.selectedVariableType = variableType;
-    if(variableType === 'codelist') {
-      this.isCodelist = true
+    if (variableType === 'codelist') {
+      this.isCodelist = true;
     } else {
       this.isCodelist = false;
     }
@@ -61,12 +56,9 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
   }
 
   @task
-  *fetchCodeList(administrativeUnitUuid) {
-    const codelists = yield fetchCodeLists(
-      this.endpoint,
-      administrativeUnitUuid
-    );
-    this.codelists = codelists
+  *fetchCodeList(publisher) {
+    const codelists = yield fetchCodeLists(this.endpoint, publisher);
+    this.codelists = codelists;
   }
 
   @action
@@ -83,7 +75,7 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
     if (mapping) {
       this.showCard = false;
     } else {
-      this.showCard = true
+      this.showCard = true;
     }
   }
 }
