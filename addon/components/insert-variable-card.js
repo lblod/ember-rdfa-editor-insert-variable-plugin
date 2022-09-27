@@ -25,6 +25,19 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
   @action
   insert() {
     const uri = `http://data.lblod.info/mappings/${uuidv4()}`;
+    let contentSpan;
+    if (
+      this.selectedVariableType === 'location' ||
+      this.selectedVariableType === 'codelist'
+    ) {
+      contentSpan = `<span property="ext:content">\${${this.selectedVariableType}}</span>`;
+    } else if (this.selectedVariableType === 'date') {
+      contentSpan = `<span property="ext:content" ${
+        this.selectedVariableType === 'date' ? 'datatype="xsd:date"' : ''
+      }>\${${this.selectedVariableType}}</span>`;
+    } else {
+      contentSpan = `<span class="mark-highlight-manual">\${${this.selectedVariableType}}</span>`;
+    }
     const htmlToInsert = `
       <span resource="${uri}" typeof="ext:Mapping">
         <span property="dct:source" resource="${this.endpoint}"></span>
@@ -34,9 +47,7 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
             : ''
         }
         <span property="dct:type" content="${this.selectedVariableType}"></span>
-        <span property="ext:content" ${
-          this.selectedVariableType === 'date' ? 'datatype="xsd:date"' : ''
-        }>\${${this.selectedVariableType}}</span>
+        ${contentSpan}
       </span>
     `;
     this.args.controller.executeCommand(
