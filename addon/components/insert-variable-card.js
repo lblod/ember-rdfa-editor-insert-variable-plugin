@@ -28,8 +28,15 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
     const htmlToInsert = `
       <span resource="${uri}" typeof="ext:Mapping">
         <span property="dct:source" resource="${this.endpoint}"></span>
+        ${
+          this.selectedCodelist
+            ? ` <span property="ext:codelist" content="${this.selectedCodelist.uri}"></span>`
+            : ''
+        }
         <span property="dct:type" content="${this.selectedVariableType}"></span>
-        <span property="ext:content">\${${this.selectedVariableType}}</span>
+        <span property="ext:content" ${
+          this.selectedVariableType === 'date' ? 'datatype="xsd:date"' : ''
+        }>\${${this.selectedVariableType}}</span>
       </span>
     `;
     this.args.controller.executeCommand(
@@ -38,6 +45,8 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
       this.args.controller.selection.lastRange
     );
     this.selectedVariableType = undefined;
+    this.selectedCodelist = undefined;
+    this.isCodelist = false;
   }
 
   @action
