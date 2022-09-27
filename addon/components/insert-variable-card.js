@@ -17,7 +17,7 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
     super(...arguments);
     const config = getOwner(this).resolveRegistration('config:environment');
     this.endpoint = config.insertVariablePlugin.endpoint;
-    const { publisher } = this.args.widgetArgs.options;
+    const { publisher } = this.args.widgetArgs.options || {};
     this.args.controller.onEvent('selectionChanged', this.selectionChanged);
     this.fetchCodeList.perform(publisher);
   }
