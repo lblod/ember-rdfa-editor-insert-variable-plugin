@@ -7,7 +7,7 @@ The plugin needs an endpoint for the codelists, this endpoint will also be coded
 ```
 module.exports = function (/* environment, appConfig */) {
   return {
-    insertCodelistPlugin: {
+    insertVariablePlugin: {
       endpoint: 'https://dev.roadsigns.lblod.info/sparql',
     }
   };
