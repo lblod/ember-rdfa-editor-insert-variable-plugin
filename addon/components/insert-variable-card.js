@@ -55,6 +55,11 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
       htmlToInsert,
       this.args.controller.selection.lastRange
     );
+    this.args.controller.executeCommand(
+      'insert-text',
+      '\u200B',
+      this.args.controller.selection.lastRange
+    );
     this.selectedVariableType = undefined;
     this.selectedCodelist = undefined;
     this.isCodelist = false;
