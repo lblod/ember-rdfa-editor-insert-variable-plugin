@@ -5,7 +5,7 @@ import { getOwner } from '@ember/application';
 import { task } from 'ember-concurrency';
 import { v4 as uuidv4 } from 'uuid';
 import fetchCodeLists from '../utils/fetchData';
-
+import { INVISIBLE_SPACE } from '../utils/constants';
 export default class EditorPluginsInsertCodelistCardComponent extends Component {
   @tracked variableTypes = ['text', 'number', 'date', 'location', 'codelist'];
   @tracked selectedVariableType;
@@ -57,7 +57,7 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
     );
     this.args.controller.executeCommand(
       'insert-text',
-      '\u200B',
+      INVISIBLE_SPACE,
       this.args.controller.selection.lastRange
     );
     this.selectedVariableType = undefined;
