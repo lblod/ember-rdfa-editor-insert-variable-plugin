@@ -1,5 +1,17 @@
 
 
+
+## 0.2.2 (2022-09-30)
+
+#### :bug: Bug Fix
+* [#5](https://github.com/lblod/ember-rdfa-editor-insert-variable-plugin/pull/5) Ensure an invisible space is inserted after the variable ([@elpoelma](https://github.com/elpoelma))
+
+#### :house: Internal
+* [#6](https://github.com/lblod/ember-rdfa-editor-insert-variable-plugin/pull/6) Fix mismatching package versions ([@elpoelma](https://github.com/elpoelma))
+
+#### Committers: 1
+- Elena Poelman ([@elpoelma](https://github.com/elpoelma))
+
 ## 0.2.1 (2022-09-28)
 
 #### :bug: Bug Fix
