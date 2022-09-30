@@ -5,7 +5,7 @@ import { getOwner } from '@ember/application';
 import { task } from 'ember-concurrency';
 import { v4 as uuidv4 } from 'uuid';
 import fetchCodeLists from '../utils/fetchData';
-
+import { INVISIBLE_SPACE } from '@lblod/ember-rdfa-editor/model/util/constants';
 export default class EditorPluginsInsertCodelistCardComponent extends Component {
   @tracked variableTypes = ['text', 'number', 'date', 'location', 'codelist'];
   @tracked selectedVariableType;
@@ -53,6 +53,11 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
     this.args.controller.executeCommand(
       'insert-html',
       htmlToInsert,
+      this.args.controller.selection.lastRange
+    );
+    this.args.controller.executeCommand(
+      'insert-text',
+      INVISIBLE_SPACE,
       this.args.controller.selection.lastRange
     );
     this.selectedVariableType = undefined;
