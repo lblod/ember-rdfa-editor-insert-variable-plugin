@@ -1,6 +1,15 @@
 
 
 
+
+## 0.2.3 (2022-10-05)
+
+#### :bug: Bug Fix
+* [#7](https://github.com/lblod/ember-rdfa-editor-insert-variable-plugin/pull/7) Don't fail on an empty selection ([@lagartoverde](https://github.com/lagartoverde))
+
+#### Committers: 1
+- Oscar Rodriguez Villalobos ([@lagartoverde](https://github.com/lagartoverde))
+
 ## 0.2.2 (2022-09-30)
 
 #### :bug: Bug Fix
