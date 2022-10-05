@@ -88,12 +88,13 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
 
   @action
   selectionChanged() {
-    if (!this.args.controller.selection.lastRange) {
+    const currentSelection = this.args.controller.selection.lastRange;
+    if (!currentSelection) {
       return;
     }
     this.showCard = false;
     const limitedDatastore = this.args.controller.datastore.limitToRange(
-      this.args.controller.selection.lastRange,
+      currentSelection,
       'rangeIsInside'
     );
     const mapping = limitedDatastore
