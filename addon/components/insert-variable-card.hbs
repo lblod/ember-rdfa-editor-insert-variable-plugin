@@ -26,7 +26,7 @@
           {{variable.label}}
         </PowerSelect>
       {{/if}}
-      <AuButton {{on 'click' this.insert}} @disabled={{(or (not this.selectedVariableType) (and this.isCodelist (not this.selectedCodelist)))}}>{{t "insert.button"}}</AuButton>
+      <AuButton {{on 'click' this.insert}} @disabled={{or (not this.selectedVariableType) (and this.isCodelist (not this.selectedCodelist))}}>{{t "insert.button"}}</AuButton>
     </c.content>
   </AuCard>
 {{/if}}

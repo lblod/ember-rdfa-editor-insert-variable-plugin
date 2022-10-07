@@ -2,12 +2,15 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 
 export default class ApplicationController extends Controller {
-  plugins = [{
-    name:'insert-variable',
-    options: {
-      administrativeUnitUuid: '141d9d6b-54af-4d17-b313-8d1c30bc3f5b'
-    }
-  }];
+  plugins = [
+    {
+      name: 'insert-variable',
+      options: {
+        publisher:
+          'http://data.lblod.info/id/bestuurseenheden/cec59e5e872a9084e93becf3026bfcc2f25926ea76372711b7a745875f3b7949',
+      },
+    },
+  ];
 
   @action
   rdfaEditorInit(controller) {
