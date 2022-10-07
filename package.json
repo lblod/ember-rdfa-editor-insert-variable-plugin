@@ -38,7 +38,7 @@
   },
   "peerDependencies": {
     "@appuniversum/ember-appuniversum": "^1.7.0",
-    "@lblod/ember-rdfa-editor": ">=0.63.3",
+    "@lblod/ember-rdfa-editor": ">=1.0.0-alpha.3",
     "ember-concurrency": "^2.2.0"
   },
   "devDependencies": {
@@ -48,7 +48,7 @@
     "@embroider/test-setup": "^0.48.1",
     "@glimmer/component": "^1.0.3",
     "@glimmer/tracking": "^1.0.3",
-    "@lblod/ember-rdfa-editor": "^0.63.3",
+    "@lblod/ember-rdfa-editor": "^1.0.0-alpha.3",
     "@release-it-plugins/lerna-changelog": "^5.0.0",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",

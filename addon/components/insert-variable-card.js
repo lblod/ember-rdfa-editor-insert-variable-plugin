@@ -5,7 +5,7 @@ import { getOwner } from '@ember/application';
 import { task } from 'ember-concurrency';
 import { v4 as uuidv4 } from 'uuid';
 import fetchCodeLists from '../utils/fetchData';
-import { INVISIBLE_SPACE } from '@lblod/ember-rdfa-editor/model/util/constants';
+import { INVISIBLE_SPACE } from '@lblod/ember-rdfa-editor/utils/constants';
 export default class EditorPluginsInsertCodelistCardComponent extends Component {
   @tracked variableTypes = ['text', 'number', 'date', 'location', 'codelist'];
   @tracked selectedVariableType;
@@ -17,9 +17,18 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
     super(...arguments);
     const config = getOwner(this).resolveRegistration('config:environment');
     this.endpoint = config.insertVariablePlugin.endpoint;
+  }
+
+  @action
+  didInsert() {
     const { publisher } = this.args.widgetArgs.options || {};
-    this.args.controller.onEvent('selectionChanged', this.selectionChanged);
+    this.args.controller.addTransactionStepListener(this.transactionUpdate);
     this.fetchCodeList.perform(publisher);
+  }
+
+  willDestroy() {
+    this.args.controller.removeTransactionStepListener(this.transactionUpdate);
+    super.willDestroy();
   }
 
   @action
@@ -50,16 +59,16 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
         ${contentSpan}
       </span>
     `;
-    this.args.controller.executeCommand(
-      'insert-html',
-      htmlToInsert,
-      this.args.controller.selection.lastRange
-    );
-    this.args.controller.executeCommand(
-      'insert-text',
-      INVISIBLE_SPACE,
-      this.args.controller.selection.lastRange
-    );
+    this.args.controller.perform((tr) => {
+      tr.commands.insertHtml({
+        htmlString: htmlToInsert,
+      });
+    });
+    this.args.controller.perform((tr) => {
+      tr.commands.insertHtml({
+        htmlString: INVISIBLE_SPACE,
+      });
+    });
     this.selectedVariableType = undefined;
     this.selectedCodelist = undefined;
     this.isCodelist = false;
@@ -86,18 +95,21 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
     this.codelists = codelists;
   }
 
-  modifiesSelection(steps){
-    return steps.some((step) => step.type === 'selection-step' || step.type === 'operation-step')
+  modifiesSelection(steps) {
+    return steps.some(
+      (step) => step.type === 'selection-step' || step.type === 'operation-step'
+    );
   }
 
-  @action
-  transactionUpdate(transaction, steps) {
-    if(this.modifiesSelection(steps)){
+  transactionUpdate = (transaction, steps) => {
+    if (
+      this.modifiesSelection(steps) &&
+      transaction.currentSelection.lastRange
+    ) {
       this.showCard = false;
-      const limitedDatastore = transaction.getCurrentDataStore().limitToRange(
-        transaction.currentSelection.lastRange,
-        'rangeIsInside'
-      );
+      const limitedDatastore = transaction
+        .getCurrentDataStore()
+        .limitToRange(transaction.currentSelection.lastRange, 'rangeIsInside');
       const mapping = limitedDatastore
         .match(null, 'a', 'ext:Mapping')
         .asQuads()
@@ -106,8 +118,8 @@ export default class EditorPluginsInsertCodelistCardComponent extends Component 
       if (mapping) {
         this.showCard = false;
       } else {
-        this.showCard = true
+        this.showCard = true;
       }
     }
-  }
+  };
 }
