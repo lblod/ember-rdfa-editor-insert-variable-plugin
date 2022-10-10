@@ -8,6 +8,7 @@ export default class ApplicationController extends Controller {
       options: {
         publisher:
           'http://data.lblod.info/id/bestuurseenheden/141d9d6b-54af-4d17-b313-8d1c30bc3f5b',
+        variableTypes: ['text', 'number', 'date', 'location', 'codelist'],
       },
     },
   ];
