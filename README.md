@@ -1,4 +1,6 @@
 # ember-rdfa-editor-insert-variable-plugin
+:warning: This ember addon is no longer maintained. Please use [@lblod/ember-rdfa-editor-lblod-plugins](https://github.com/lblod/ember-rdfa-editor-lblod-plugins) instead.
+
 [RDFa editor](https://github.com/lblod/ember-rdfa-editor) plugin to insert a variable into a template.
 
 ## Configuration
